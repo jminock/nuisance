@@ -79,6 +79,10 @@ GenericVectorsInputHandler::GenericVectorsInputHandler(std::string const &handle
   fFitEventTree->SetBranchAddress("py", py_fsp);
   fFitEventTree->SetBranchAddress("pz", pz_fsp);
   fFitEventTree->SetBranchAddress("E", E_fsp);
+  fFitEventTree->SetBranchAddress("vx", x_fsp);
+  fFitEventTree->SetBranchAddress("vy", y_fsp);
+  fFitEventTree->SetBranchAddress("vz", z_fsp);
+  fFitEventTree->SetBranchAddress("t", T_fsp);
   fFitEventTree->SetBranchAddress("pdg", pdg_fsp);
   // fFitEventTree->SetBranchAddress("pdg_rank", pdg_fsp);
 
@@ -88,6 +92,10 @@ GenericVectorsInputHandler::GenericVectorsInputHandler(std::string const &handle
   fFitEventTree->SetBranchAddress("py_init", py_init);
   fFitEventTree->SetBranchAddress("pz_init", pz_init);
   fFitEventTree->SetBranchAddress("E_init", E_init);
+  fFitEventTree->SetBranchAddress("x_init", x_init);
+  fFitEventTree->SetBranchAddress("y_init", y_init);
+  fFitEventTree->SetBranchAddress("z_init", z_init);
+  fFitEventTree->SetBranchAddress("t_init", T_init);
   fFitEventTree->SetBranchAddress("pdg_init", pdg_init);
 
   // Save pre-FSI vectors
@@ -96,6 +104,10 @@ GenericVectorsInputHandler::GenericVectorsInputHandler(std::string const &handle
   fFitEventTree->SetBranchAddress("py_vert", py_vert);
   fFitEventTree->SetBranchAddress("pz_vert", pz_vert);
   fFitEventTree->SetBranchAddress("E_vert", E_vert);
+  fFitEventTree->SetBranchAddress("x_vert", x_vert);
+  fFitEventTree->SetBranchAddress("y_vert", y_vert);
+  fFitEventTree->SetBranchAddress("z_vert", z_vert);
+  fFitEventTree->SetBranchAddress("t_vert", T_vert);
   fFitEventTree->SetBranchAddress("pdg_vert", pdg_vert);
 
   fFitEventTree->SetBranchAddress("InputWeight", &FlatTreeInputWeight);
@@ -162,6 +174,12 @@ FitEvent *GenericVectorsInputHandler::GetNuisanceEvent(const UInt_t entry,
     fNUISANCEEvent->fParticleMom[curpart][2] = pz_init[i]*1000.0;
     fNUISANCEEvent->fParticleMom[curpart][3] = E_init[i]*1000.0;
 
+    // Pos and time
+    fNUISANCEEvent->fParticleVec[curpart][0] = x_init[i];
+    fNUISANCEEvent->fParticleVec[curpart][1] = y_init[i];
+    fNUISANCEEvent->fParticleVec[curpart][2] = z_init[i];
+    fNUISANCEEvent->fParticleVec[curpart][3] = T_init[i];
+
     // PDG
     fNUISANCEEvent->fParticlePDG[curpart] = pdg_init[i];
 
@@ -199,6 +217,12 @@ FitEvent *GenericVectorsInputHandler::GetNuisanceEvent(const UInt_t entry,
     fNUISANCEEvent->fParticleMom[curpart][2] = pz_vert[i]*1000.0;
     fNUISANCEEvent->fParticleMom[curpart][3] = E_vert[i]*1000.0;
 
+    // Pos and time
+    fNUISANCEEvent->fParticleVec[curpart][0] = x_vert[i];
+    fNUISANCEEvent->fParticleVec[curpart][1] = y_vert[i];
+    fNUISANCEEvent->fParticleVec[curpart][2] = z_vert[i];
+    fNUISANCEEvent->fParticleVec[curpart][3] = T_vert[i];
+
     // PDG
     fNUISANCEEvent->fParticlePDG[curpart] = pdg_vert[i];
 
@@ -216,6 +240,12 @@ FitEvent *GenericVectorsInputHandler::GetNuisanceEvent(const UInt_t entry,
     fNUISANCEEvent->fParticleMom[curpart][1] = py_fsp[i]*1000.0;
     fNUISANCEEvent->fParticleMom[curpart][2] = pz_fsp[i]*1000.0;
     fNUISANCEEvent->fParticleMom[curpart][3] = E_fsp[i]*1000.0;
+
+    // Pos and time
+    fNUISANCEEvent->fParticleVec[curpart][0] = x_fsp[i];
+    fNUISANCEEvent->fParticleVec[curpart][1] = y_fsp[i];
+    fNUISANCEEvent->fParticleVec[curpart][2] = z_fsp[i];
+    fNUISANCEEvent->fParticleVec[curpart][3] = T_fsp[i];
 
     // PDG
     fNUISANCEEvent->fParticlePDG[curpart] = pdg_fsp[i];

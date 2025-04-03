@@ -64,6 +64,10 @@ public:
   float py_fsp[kMAX];
   float pz_fsp[kMAX];
   float E_fsp[kMAX];
+  float x_fsp[kMAX];
+  float y_fsp[kMAX];
+  float z_fsp[kMAX];
+  float T_fsp[kMAX];
   int pdg_fsp[kMAX];
 
   // Save incoming particle info
@@ -72,6 +76,10 @@ public:
   float py_init[kMAX];
   float pz_init[kMAX];
   float E_init[kMAX];
+  float x_init[kMAX];
+  float y_init[kMAX];
+  float z_init[kMAX];
+  float T_init[kMAX];
   int pdg_init[kMAX];
 
   // Save pre-FSI particle info
@@ -80,6 +88,10 @@ public:
   float py_vert[kMAX];
   float pz_vert[kMAX];
   float E_vert[kMAX];
+  float x_vert[kMAX];
+  float y_vert[kMAX];
+  float z_vert[kMAX];
+  float T_vert[kMAX];
   int pdg_vert[kMAX];
 
   // Basic event info

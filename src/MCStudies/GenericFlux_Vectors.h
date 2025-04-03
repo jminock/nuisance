@@ -118,6 +118,10 @@ public:
   float py[kMAX];
   float pz[kMAX];
   float E[kMAX];
+  float vx[kMAX];
+  float vy[kMAX];
+  float vz[kMAX];
+  float T[kMAX];
   int pdg[kMAX];
   int pdg_rank[kMAX];
 
@@ -127,6 +131,10 @@ public:
   float py_init[kMAX];
   float pz_init[kMAX];
   float E_init[kMAX];
+  float x_init[kMAX];
+  float y_init[kMAX];
+  float z_init[kMAX];
+  float T_init[kMAX];
   int pdg_init[kMAX];
 
   // Save pre-FSI particle info
@@ -135,6 +143,10 @@ public:
   float py_vert[kMAX];
   float pz_vert[kMAX];
   float E_vert[kMAX];
+  float x_vert[kMAX];
+  float y_vert[kMAX];
+  float z_vert[kMAX];
+  float T_vert[kMAX];
   int pdg_vert[kMAX];
 
   // Basic event info

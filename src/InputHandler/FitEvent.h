@@ -84,12 +84,18 @@ public:
   TLorentzVector GetParticleP4    (int index) const;
   /// Return Particle 3-momentum for given index in particle stack
   TVector3       GetParticleP3    (int index) const;
+  /// Return Particle 4-Pos and time for given index in particle stack
+  TLorentzVector GetParticleV4    (int index) const;
+  /// Return Particle 3-position for given index in particle stack
+  TVector3       GetParticleV3    (int index) const;
   /// Return Particle absolute momentum for given index in particle stack
   double         GetParticleMom   (int index) const;
   /// Return Particle absolute momentum-squared for given index in particle stack
   double         GetParticleMom2  (int index) const;
   /// Return Particle energy for given index in particle stack
   double         GetParticleE     (int index) const;
+  /// Return Particle time for given index in particle stack
+  double         GetParticleT     (int index) const;
   /// Return Particle State for given index in particle stack
   int            GetParticleState (int index) const;
   /// Return Particle PDG for given index in particle stack
@@ -702,12 +708,14 @@ public:
   UInt_t kMaxParticles;
   int fNParticles;
   double** fParticleMom;
+  double** fParticleVec;
   UInt_t* fParticleState;
   int* fParticlePDG;
   FitParticle** fParticleList;
   bool *fPrimaryVertex;
 
   double** fOrigParticleMom;
+  double** fOrigParticleVec;
   UInt_t* fOrigParticleState;
   int* fOrigParticlePDG;
   bool* fOrigPrimaryVertex;

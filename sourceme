@@ -1,0 +1,13 @@
+#!/bin/bash
+
+export PATH=/exp/annie/app/users/jminock/nuwro/bin:$PATH
+
+export NUWRO=/exp/annie/app/users/jminock/nuwro
+export NuWro_INC_DIR=${NUWRO}/src
+
+#export LOG4CPP_INC=/Genie/log4cpp/install/include
+
+export GENIE3=${GENIE}/install
+export GENIE_INC_DIR=${GENIE}/install/include
+
+

@@ -163,6 +163,12 @@ void GenericFlux_Vectors::AddEventVariablesToTree() {
   eventVariables->Branch("py", py, "py[nfsp]/F");
   eventVariables->Branch("pz", pz, "pz[nfsp]/F");
   eventVariables->Branch("E", E, "E[nfsp]/F");
+  eventVariables->Branch("vx", vx, "vx[nfsp]/F");
+  eventVariables->Branch("vy", vy, "vy[nfsp]/F");
+  eventVariables->Branch("vz", vz, "vz[nfsp]/F");
+  eventVariables->Branch("t", T, "t[nfsp]/F");
+
+
   eventVariables->Branch("pdg", pdg, "pdg[nfsp]/I");
   eventVariables->Branch("pdg_rank", pdg_rank, "pdg_rank[nfsp]/I");
 
@@ -172,6 +178,10 @@ void GenericFlux_Vectors::AddEventVariablesToTree() {
   eventVariables->Branch("py_init", py_init, "py_init[ninitp]/F");
   eventVariables->Branch("pz_init", pz_init, "pz_init[ninitp]/F");
   eventVariables->Branch("E_init", E_init, "E_init[ninitp]/F");
+  eventVariables->Branch("x_init", x_init, "x_init[ninitp]/F");
+  eventVariables->Branch("y_init", y_init, "y_init[ninitp]/F");
+  eventVariables->Branch("z_init", z_init, "z_init[ninitp]/F");
+  eventVariables->Branch("t_init", T_init, "t_init[ninitp]/F");
   eventVariables->Branch("pdg_init", pdg_init, "pdg_init[ninitp]/I");
 
   // Save pre-FSI vectors
@@ -180,6 +190,10 @@ void GenericFlux_Vectors::AddEventVariablesToTree() {
   eventVariables->Branch("py_vert", py_vert, "py_vert[nvertp]/F");
   eventVariables->Branch("pz_vert", pz_vert, "pz_vert[nvertp]/F");
   eventVariables->Branch("E_vert", E_vert, "E_vert[nvertp]/F");
+  eventVariables->Branch("x_vert", x_vert, "x_vert[nvertp]/F");
+  eventVariables->Branch("y_vert", y_vert, "y_vert[nvertp]/F");
+  eventVariables->Branch("z_vert", z_vert, "z_vert[nvertp]/F");
+  eventVariables->Branch("t_vert", T_vert, "t_vert[nvertp]/F");
   eventVariables->Branch("pdg_vert", pdg_vert, "pdg_vert[nvertp]/I");
 
   // Event Scaling Information
@@ -303,6 +317,10 @@ void GenericFlux_Vectors::FillEventVariables(FitEvent *event) {
     py[i] = partList[i]->fP.Y() / 1E3;
     pz[i] = partList[i]->fP.Z() / 1E3;
     E[i] = partList[i]->fP.E() / 1E3;
+    vx[i] = partList[i]->fV.X();
+    vy[i] = partList[i]->fV.Y();
+    vz[i] = partList[i]->fV.Z();
+    T[i] = partList[i]->fV.E();
     pdg[i] = partList[i]->fPID;
     pdgMap[pdg[i]].push_back(std::make_pair(partList[i]->fP.Vect().Mag(), i));
   }
@@ -327,6 +345,10 @@ void GenericFlux_Vectors::FillEventVariables(FitEvent *event) {
     py_vert[i] = vertList[i]->fP.Y() / 1E3;
     pz_vert[i] = vertList[i]->fP.Z() / 1E3;
     E_vert[i] = vertList[i]->fP.E() / 1E3;
+    x_vert[i] = vertList[i]->fV.X();
+    y_vert[i] = vertList[i]->fV.Y();
+    z_vert[i] = vertList[i]->fV.Z();
+    T_vert[i] = vertList[i]->fV.E();
     pdg_vert[i] = vertList[i]->fPID;
   }
 
@@ -337,6 +359,10 @@ void GenericFlux_Vectors::FillEventVariables(FitEvent *event) {
     py_init[i] = initList[i]->fP.Y() / 1E3;
     pz_init[i] = initList[i]->fP.Z() / 1E3;
     E_init[i] = initList[i]->fP.E() / 1E3;
+    x_init[i] = initList[i]->fV.X();
+    y_init[i] = initList[i]->fV.Y();
+    z_init[i] = initList[i]->fV.Z();
+    T_init[i] = initList[i]->fV.E();
     pdg_init[i] = initList[i]->fPID;
   }
 
@@ -389,12 +415,15 @@ void GenericFlux_Vectors::ResetVariables() {
   nfsp = ninitp = nvertp = 0;
   for (int i = 0; i < kMAX; ++i) {
     px[i] = py[i] = pz[i] = E[i] = -999;
+    vx[i] = vy[i] = vz[i] = T[i] = -999;
     pdg[i] = pdg_rank[i] = 0;
 
     px_init[i] = py_init[i] = pz_init[i] = E_init[i] = -999;
+    x_init[i] = y_init[i] = z_init[i] = T_init[i] = -999;
     pdg_init[i] = 0;
 
     px_vert[i] = py_vert[i] = pz_vert[i] = E_vert[i] = -999;
+    x_vert[i] = y_vert[i] = z_vert[i] = T_vert[i] = -999;
     pdg_vert[i] = 0;
   }
 

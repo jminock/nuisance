@@ -165,7 +165,8 @@ void MINERvA_CCQE_XSec_1DQ2_nu::FillEventVariables(FitEvent *event) {
   if (fSaveExtra) {
     double pm = 938.2720813;
     double pe = pm + 120.0;
-    FitParticle *fakeproton = new FitParticle(0.0, 0.0, sqrt(pe * pe - pm * pm),
+    FitParticle *fakeproton = new FitParticle(0.0, 0.0, 0.0, 0.0,
+                                              0.0, 0.0, sqrt(pe * pe - pm * pm),
                                               pe, 2212, kFinalState);
     double range = MINERvAUtils::RangeInScintillator(fakeproton, 100);
 

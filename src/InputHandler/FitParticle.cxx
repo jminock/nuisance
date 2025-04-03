@@ -18,9 +18,10 @@
 *******************************************************************************/
 #include "FitParticle.h"
 
-FitParticle::FitParticle(double x, double y, double z, double t, int pdg, Int_t state){
+FitParticle::FitParticle(double x, double y, double z, double t, double px, double py, double pz, double E, int pdg, Int_t state){
 
-  fP = TLorentzVector(x, y, z, t);
+  fP = TLorentzVector(px, py, pz, E);
+  fV = TLorentzVector(x, y, z, t);
   fPID = pdg;
   fStatus = state;
 
@@ -35,9 +36,10 @@ FitParticle::FitParticle(double x, double y, double z, double t, int pdg, Int_t 
 
 };
 
-void FitParticle::SetValues(double x, double y, double z, double t, int pdg, Int_t state){
+void FitParticle::SetValues(double x, double y, double z, double t, double px, double py, double pz, double E, int pdg, Int_t state){
 
-  fP = TLorentzVector(x, y, z, t);
+  fP = TLorentzVector(px, py, pz, E);
+  fV = TLorentzVector(x, y, z, t);
   fPID = pdg;
   fStatus = state;
 
