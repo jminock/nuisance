@@ -31,7 +31,7 @@ Thanks for your contribution!
 
 ### Compilation
 
-The following instructions should be used to build the fitter after checking out.
+The following instructions should be used to build the fitter after checking out. Build works in GENIE container. GENIE is not currently set up to work with NUISANCE.
 
 1. Make sure environmental variables required for the generators you wish to build against are set.
 2. In the top nuisance directory make a new build directory:
@@ -61,6 +61,30 @@ $ source Linux/setup.sh
 
 If you prefer, most configure variables can be entered through a cmake UI, such as
 ccmake. e.g. "$ mkdir build && cd build && ccmake ../"
+
+### Running with NuWro
+
+The following instructions are for generating flattrees with NuWro input in the GENIE container
+
+1. Make sure all environmental variables are set 
+source /Genie/GENIE-v3-master/annie/Setup_annie.sh
+nuisance/ source sourceme
+nuisance_build/ source Linux/setup.sh
+
+2. Prepare NuWro events with appropriate flux histogram files
+PrepareNuWroEvents -i [nuwro output]
+ -F [flux hist file],hEnumu_cv,14,[species fraction]
+ -F [flux hist file],hEnumubar_cv,-14,[species fraction]
+ -F [flux hist file],hEnue_cv,12,[species fraction]
+ -F [flux hist file],hEnuebar_cv,-12,[species fraction]
+ -o nuisance.nuwro.prep.[run].root
+
+To generate flux histograms, see fluxHist.cc in ANNIE Auxiliary Files directory/repo
+
+3. Run through nuisance flattening
+nuisflat -i NuWro:nuisance.nuwro.prep.[run].root
+ -o nuisance.nuwro.flat.[run].root
+
 
 #### `nusystematics`
 
