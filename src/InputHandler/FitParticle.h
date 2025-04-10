@@ -42,14 +42,14 @@ class FitParticle {
   public:
 
   /// Create particle of given pdg from momentum variables and state
-  FitParticle(double x, double y, double z, double t, double px, double py, double pz, double E, int pdg, Int_t state);
+  FitParticle(double x, double y, double z, double t, int pdg, Int_t state);
 
   /// Create empty particle (zero momentum)
   FitParticle(){};
   ~FitParticle(){};
 
   /// Used to change values after creation
-  void SetValues(double x, double y, double z, double t, double px, double py, double pz, double E, int pdg, Int_t state);
+  void SetValues(double x, double y, double z, double t, int pdg, Int_t state);
 
   /// Return Status Code according to particle_state enum
   inline int  Status (void) const { return fStatus; };
@@ -78,14 +78,8 @@ class FitParticle {
   /// Get 4 Momentum
   inline TLorentzVector P4(void)  const {return fP;};
 
-  /// Get Pos and time
-  inline TLorentzVector V4(void)  const {return fV;};
-
   /// Get 3 Momentum
   inline TVector3       P3(void)  const {return fP.Vect();};
-
-  /// Get Position
-  inline TVector3       V3(void)  const {return fV.Vect();};
 
   /// Get 3 momentum magnitude
   inline double         p(void)  const { return fP.Vect().Mag(); };
@@ -95,7 +89,6 @@ class FitParticle {
 
   /// Data Members
   TLorentzVector fP;   ///< Particle 4 Momentum
-  TLorentzVector fV;   ///< Particle 4 Pos and time
   int fPID;            ///< Particle PDG Code
   int fIsAlive;        ///< Whether the particle is alive at the end of the event (Yes 1, No 0, Other? -1)
   int fNEUTStatusCode; ///< Particle Status (Incoming 1, FSI 2, Outgoing 0, Other 3)

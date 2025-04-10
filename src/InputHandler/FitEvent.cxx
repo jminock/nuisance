@@ -40,13 +40,11 @@ void FitEvent::AllocateParticleStack(int stacksize) {
   fParticleList = new FitParticle *[kMaxParticles];
 
   fParticleMom = new double *[kMaxParticles];
-  fParticleVec = new double *[kMaxParticles];
   fParticleState = new UInt_t[kMaxParticles];
   fParticlePDG = new int[kMaxParticles];
   fPrimaryVertex = new bool[kMaxParticles];
 
   fOrigParticleMom = new double *[kMaxParticles];
-  fOrigParticleVec = new double *[kMaxParticles];
   fOrigParticleState = new UInt_t[kMaxParticles];
   fOrigParticlePDG = new int[kMaxParticles];
   fOrigPrimaryVertex = new bool[kMaxParticles];
@@ -54,9 +52,7 @@ void FitEvent::AllocateParticleStack(int stacksize) {
   for (size_t i = 0; i < kMaxParticles; i++) {
     fParticleList[i] = NULL;
     fParticleMom[i] = new double[4];
-    fParticleVec[i] = new double[4];
     fOrigParticleMom[i] = new double[4];
-    fOrigParticleVec[i] = new double[4];
   }
 
   if (fGenInfo)
@@ -73,14 +69,10 @@ void FitEvent::DeallocateParticleStack() {
     if (fParticleList[i])
       delete fParticleList[i];
     delete fParticleMom[i];
-    delete fParticleVec[i];
     delete fOrigParticleMom[i];
-    delete fOrigParticleVec[i];
   }
   delete fParticleMom;
-  delete fParticleVec;
   delete fOrigParticleMom;
-  delete fOrigParticleVec;
 
   delete fParticleList;
 
@@ -155,10 +147,6 @@ void FitEvent::ResetEvent() {
     fParticleMom[i][1] = 0.0;
     fParticleMom[i][2] = 0.0;
     fParticleMom[i][3] = 0.0;
-    fParticleVec[i][0] = 0.0;
-    fParticleVec[i][1] = 0.0;
-    fParticleVec[i][2] = 0.0;
-    fParticleVec[i][3] = 0.0;
 
     fPrimaryVertex[i] = false;
 
@@ -168,10 +156,6 @@ void FitEvent::ResetEvent() {
     fOrigParticleMom[i][1] = 0.0;
     fOrigParticleMom[i][2] = 0.0;
     fOrigParticleMom[i][3] = 0.0;
-    fOrigParticleVec[i][0] = 0.0;
-    fOrigParticleVec[i][1] = 0.0;
-    fOrigParticleVec[i][2] = 0.0;
-    fOrigParticleVec[i][3] = 0.0;
     fOrigPrimaryVertex[i] = false;
   }
 }
@@ -187,10 +171,6 @@ void FitEvent::OrderStack() {
     fOrigParticleMom[i][1] = fParticleMom[i][1];
     fOrigParticleMom[i][2] = fParticleMom[i][2];
     fOrigParticleMom[i][3] = fParticleMom[i][3];
-    fOrigParticleVec[i][0] = fParticleVec[i][0];
-    fOrigParticleVec[i][1] = fParticleVec[i][1];
-    fOrigParticleVec[i][2] = fParticleVec[i][2];
-    fOrigParticleVec[i][3] = fParticleVec[i][3];
     fOrigPrimaryVertex[i] = fPrimaryVertex[i];
   }
 
@@ -210,10 +190,6 @@ void FitEvent::OrderStack() {
       fParticleMom[fNParticles][1] = fOrigParticleMom[i][1];
       fParticleMom[fNParticles][2] = fOrigParticleMom[i][2];
       fParticleMom[fNParticles][3] = fOrigParticleMom[i][3];
-      fParticleVec[fNParticles][0] = fOrigParticleVec[i][0];
-      fParticleVec[fNParticles][1] = fOrigParticleVec[i][1];
-      fParticleVec[fNParticles][2] = fOrigParticleVec[i][2];
-      fParticleVec[fNParticles][3] = fOrigParticleVec[i][3];
       fPrimaryVertex[fNParticles] = fOrigPrimaryVertex[i];
 
       fNParticles++;
@@ -275,6 +251,9 @@ void FitEvent::AddBranchesToTree(TTree *tn) {
   tn->Branch("TotCrs", &fTotCrs, "TotCrs/D");
   tn->Branch("TargetA", &fTargetA, "TargetA/I");
   tn->Branch("TargetH", &fTargetH, "TargetH/I");
+  tn->Branch("VtxX", &fVtxX, "VtxX/D");
+  tn->Branch("VtxY", &fVtxY, "VtxY/D");
+  tn->Branch("VtxZ", &fVtxZ, "VtxZ/D");
   tn->Branch("Bound", &fBound, "Bound/O");
 
   tn->Branch("RWWeight", &RWWeight, "RWWeight/D");
@@ -285,7 +264,6 @@ void FitEvent::AddBranchesToTree(TTree *tn) {
              "ParticleState[NParticles]/i");
   tn->Branch("ParticlePDG", fOrigParticlePDG, "ParticlePDG[NParticles]/I");
   tn->Branch("ParticleMom", fOrigParticleMom, "ParticleMom[NParticles][4]/D");
-  tn->Branch("ParticleVec", fOrigParticleVec, "ParticleVec[NParticles][4]/D");
 }
 
 // ------- EVENT ACCESS FUNCTION --------- //
@@ -301,20 +279,6 @@ TVector3 FitEvent::GetParticleP3(int index) const {
     return TVector3();
   return TVector3(fParticleMom[index][0], fParticleMom[index][1],
                   fParticleMom[index][2]);
-}
-
-TLorentzVector FitEvent::GetParticleV4(int index) const {
-  if (index == -1 or index >= fNParticles)
-    return TLorentzVector();
-  return TLorentzVector(fParticleVec[index][0], fParticleVec[index][1],
-                        fParticleVec[index][2], fParticleVec[index][3]);
-}
-
-TVector3 FitEvent::GetParticleV3(int index) const {
-  if (index == -1 or index >= fNParticles)
-    return TVector3();
-  return TVector3(fParticleVec[index][0], fParticleVec[index][1],
-                  fParticleVec[index][2]);
 }
 
 double FitEvent::GetParticleMom(int index) const {
@@ -337,12 +301,6 @@ double FitEvent::GetParticleE(int index) const {
   if (index == -1 or index >= fNParticles)
     return 0.0;
   return fParticleMom[index][3];
-}
-
-double FitEvent::GetParticleT(int index) const {
-  if (index == -1 or index >= fNParticles)
-    return 0.0;
-  return fParticleVec[index][3];
 }
 
 int FitEvent::GetParticleState(int index) const {
@@ -378,9 +336,7 @@ FitParticle *FitEvent::GetParticle(int const i) {
     fParticleMom[i][2] << " " << fParticleMom[i][3] << " ";
     std::cout << fParticlePDG[i] << " " << fParticleState[i] << std::endl;
     */
-    fParticleList[i] = new FitParticle(fParticleVec[i][0], fParticleVec[i][1],
-                                       fParticleVec[i][2], fParticleVec[i][3],
-                                       fParticleMom[i][0], fParticleMom[i][1],
+    fParticleList[i] = new FitParticle(fParticleMom[i][0], fParticleMom[i][1],
                                        fParticleMom[i][2], fParticleMom[i][3],
                                        fParticlePDG[i], fParticleState[i]);
   } else {
@@ -390,9 +346,7 @@ FitParticle *FitEvent::GetParticle(int const i) {
     fParticleMom[i][2] << " " << fParticleMom[i][3] << " ";
     std::cout << fParticlePDG[i] << " "<< fParticleState[i] <<std::endl;
     */
-    fParticleList[i]->SetValues(fParticleVec[i][0], fParticleVec[i][1],
-                                fParticleVec[i][2], fParticleVec[i][3],
-                                fParticleMom[i][0], fParticleMom[i][1],
+    fParticleList[i]->SetValues(fParticleMom[i][0], fParticleMom[i][1],
                                 fParticleMom[i][2], fParticleMom[i][3],
                                 fParticlePDG[i], fParticleState[i]);
   }

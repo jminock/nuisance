@@ -313,6 +313,11 @@ void NuWroInputHandler::CalcNUISANCEKinematics() {
   evt->fTargetH = 0;
   evt->fBound = (evt->fTargetA != 1);
 
+  // Get Interaction Vertex
+  evt->fVtxX = fNuWroEvent->r.x;
+  evt->fVtxY = fNuWroEvent->r.y;
+  evt->fVtxZ = fNuWroEvent->r.z;
+
   // Check Particle Stack
   UInt_t npart_in = fNuWroEvent->in.size();
   UInt_t npart_out = fNuWroEvent->out.size();
@@ -403,12 +408,6 @@ void NuWroInputHandler::AddNuWroParticle(FitEvent *evt, particle &p, int state,
   evt->fParticleMom[evt->fNParticles][1] = static_cast<vect &>(p).y;
   evt->fParticleMom[evt->fNParticles][2] = static_cast<vect &>(p).z;
   evt->fParticleMom[evt->fNParticles][3] = static_cast<vect &>(p).t;
-
-  // Add Pos and T
-  evt->fParticleVec[evt->fNParticles][0] = static_cast<vect &>(p.r).x;
-  evt->fParticleVec[evt->fNParticles][1] = static_cast<vect &>(p.r).y;
-  evt->fParticleVec[evt->fNParticles][2] = static_cast<vect &>(p.r).z;
-  evt->fParticleVec[evt->fNParticles][3] = static_cast<vect &>(p.r).t;
 
   // For NuWro a particle that we've given a FSI state is a pre-FSI particle
   // An initial state particle is also a primary vertex praticle

@@ -85,6 +85,22 @@ To generate flux histograms, see fluxHist.cc in ANNIE Auxiliary Files directory/
 nuisflat -i NuWro:nuisance.nuwro.prep.[run].root
  -o nuisance.nuwro.flat.[run].root
 
+### Making changes
+
+The following lists relevant files and tips for adding information from the interaction generator to the flattrees.
+
+Located in src/InputHandler/
+    FitEvent.h and FitEvent.cxx - Creates input structure to save generator information to. Add custom data members and functions to extract members here.
+    FitParticle.h and FitParticle.cxx - Structure for each particle in a given event. Add custom particle-specific data members and functions to extract members here.
+    GenericVectorsInputHandler.h and GenericVectorsInputHandler.cxx - Used for handling NUISANCE events to be turned into flattrees. 
+    NuWroInputHandler.cxx - Interfaces directly with NuWro generator output and NUISANCE input. This information is saved to the NUISANCE "event" class, handled in the above listed FitEvent files. Please use the applicable generator-related file for your generator of interest.
+
+Located in src/MCStudies/
+    GenericFlux_Vectors.h and GenericFlux_Vectors.cxx - Used to create branches in flattrees.
+
+General advice:
+  With any generator, the generator output must be "prepared", then can be "flattened". NUISANCE does not handle vertex information by default. Hopefully, my additions are general enough for vertex info such that only the generator InputHandler requires change/additions. The functions in the above classes are not just limited to the above files.
+  Please remember to validate your flattree files and ensure all relevant variables in these files look acceptable before making changes to ANNIEDirt, WCSim, or ToolAnalysis to read in your flattree files.
 
 #### `nusystematics`
 
